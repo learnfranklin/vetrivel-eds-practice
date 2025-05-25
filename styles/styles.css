@@ -37,7 +37,7 @@
   --heading-font-size-xs: 22px;
 
   /* nav height */
-  --nav-height: 64px;
+  --nav-height: 54.5px;
 }
 
 /* fallback fonts */
@@ -254,4 +254,37 @@ main .section.highlight {
   background-color: var(--light-color);
   margin: 0;
   padding: 40px 0;
+}
+
+/* nav styles */
+header nav#nav {
+  letter-spacing: 4px;
+  color: #000;
+  padding: 8px 16px!important;
+}
+header nav#nav .nav-sections {
+  flex: unset;
+}
+header nav#nav .nav-tools {
+  display: none;
+}
+header nav#nav .nav-brand p {
+  line-height: normal;
+}
+header nav#nav a {
+  padding: 8px 16px;
+  display: inline-block;
+  line-height: 22.5px;
+  font-size: 15px;
+  font-weight: normal;
+  font-family: "Times New Roman", Georgia, Serif;
+}
+
+header nav#nav a:hover {
+  color: #000 !important;
+  background-color: #ccc !important;
+  text-decoration: none;
+}
+header nav#nav .nav-sections ul {
+  gap: 0px;
 }
