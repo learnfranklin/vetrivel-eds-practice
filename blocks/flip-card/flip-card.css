@@ -1,8 +1,6 @@
-/* --- Flip Card Grid and Sizing Adjustments --- */
 .flip-card-wrapper {
-    /* Ensures the grid block takes full width for responsive layout */
     width: 100%;
-    margin-bottom: 20px; /* Spacing below the block */
+    margin-bottom: 20px;
 }
 
 .flip-card-container ul {
@@ -18,51 +16,45 @@
     display: flex;
     justify-content: center;
     overflow: visible;
-    /* Set a consistent aspect ratio or height for a better look */
-    height: 300px; /* Increased height for better content display */
-    max-width: 400px; /* Max width for individual cards */
-    margin: 0 auto; /* Center individual cards when grid doesn't fill the space */
+    height: 300px;
+    width: 320px;
+    max-width: 100%;
+    min-width: 200px;
+    margin: 0 auto;
 }
 
 @media (min-width: 768px) {
     .flip-card-container ul {
-        /* Adjusted minmax to better fit multiple cards */
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 25px;
     }
     .flip-card-container ul li {
-        margin: 0; /* Remove centering on larger screens */
+        margin: 0;
     }
 }
 
 @media (min-width: 1024px) {
     .flip-card-container ul {
-        grid-template-columns: repeat(4, 1fr); /* Example: 4 columns */
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
-
-/* --- 3D Flip Mechanics & Appearance --- */
-
-/* Parent for 3D effect: It contains the flip-card element */
 .flip-card-container {
     perspective: 1000px; 
-    width: 100%; /* Must fill the <li> */
-    height: 100%; /* Must fill the <li> */
+    width: 100%;
+    height: 100%;
 }
 
-/* The element that actually flips */
 .flip-card {
     position: relative;
     width: 100%;
     height: 100%;
-    transition: transform 0.6s ease-in-out; /* Smoother transition */
+    transition: transform 0.6s ease-in-out;
     transform-style: preserve-3d; 
     cursor: pointer;
     box-sizing: border-box;
 }
 
-/* Flipped state */
 .flip-card.is-flipped {
     transform: rotateY(180deg);
 }
@@ -72,48 +64,42 @@
     width: 100%;
     height: 100%;
     backface-visibility: hidden; 
-    border-radius: 12px; /* Smoother corners */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Lighter, more modern shadow */
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
-    overflow: hidden; /* Important for content not spilling out */
-    
-    /* Center text/content vertically */
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
 }
 
-/* Front Card Styles */
 .flip-card-front {
-    background-color: #ffffff; /* White background */
+    background-color: #ffffff;
     color: #333;
 }
 
 .flip-card-front img {
-    max-width: 80px; /* Smaller image size, common for flip cards */
-    height: auto;
-    border-radius: 50%; /* Circular image */
-    margin-bottom: 10px;
+    max-width: 100%;
+    height: 200px;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    width: 100%;
 }
 
 .flip-card-front p {
-    margin: 5px 0;
-    font-size: 1.1em;
-    font-weight: 600;
+    margin: 0;
 }
 
+.flip-card-front p:not(:first-child) {
+    padding: 10px 16px;
+    font-size: 1.1em;
+    font-weight: 600;
+    width: 100%;
+}
 
-/* Back Card Styles */
 .flip-card-back {
-    /* Use a color similar to the commoninja demo */
-    background: linear-gradient(135deg, #1abc9c, #16a085); /* Green gradient */
+    background: linear-gradient(135deg, #1abc9c, #16a085);
     color: white;
     transform: rotateY(180deg); 
-    
-    /* Adjust alignment for back content, commoninja uses top-aligned text */
     justify-content: flex-start; 
     align-items: flex-start;
     padding: 30px;
@@ -126,63 +112,52 @@
     line-height: 1.5;
 }
 
-/* General Content Styling within cards to override default margins/padding */
-.flip-card-front > div,
 .flip-card-back > div {
-    /* Ensures content divs fill the card space for proper alignment */
-    width: 100%; 
-    height: 100%;
-    display: flex; /* Use flexbox to manage child alignment */
-    flex-direction: column;
-    justify-content: center; /* Center front content */
-    align-items: center;
-}
-
-.flip-card-back > div {
-    justify-content: flex-start; /* Align back content to the top */
+    justify-content: flex-start;
     align-items: flex-start;
 }
 
-/* Container for the rating stars */
 .flip-card .star-rating {
-    display: flex; /* Aligns stars horizontally */
-    gap: 2px;      /* Small space between stars */
+    display: flex;
+    gap: 2px;
     line-height: 1;
+    flex-direction: row;
+    padding: 0px 16px 20px;
 }
 
-/* Individual star span wrapper */
 .flip-card .star-rating > span {
     position: relative;
     display: block;
-    width: 20px; /* Adjust size as needed */
+    width: 20px;
     height: 20px;
-    color: #ccc; /* Default color for empty part of star */
+    color: #ccc;
 }
 
-/* The SVG element itself */
 .flip-card .star-rating svg.star {
     display: block;
     width: 100%;
     height: 100%;
-    /* Position the filled part over the empty part */
     position: absolute;
     top: 0;
     left: 0;
-    color: gold; /* Color for the filled part of the star */
-    overflow: hidden; /* Crucial for clipping */
+    color: gold;
+    overflow: hidden;
+    stroke: #000;
+    stroke-width: 1;
 }
 
-/* Ensure empty stars still show the outline */
 .flip-card .star-rating .empty svg.star {
-    color: #ccc;
-    fill: #ccc;
-    clip-path: none !important; /* Reset clip for fully empty stars */
+    color: #fff;
+    fill: #fff;
+    stroke: #000;
+    stroke-width: 1;
+    clip-path: none !important;
 }
 
-/* Star with color for the filled part (using clip-path to show partial fill) */
 .flip-card .star-rating .filled svg.star,
 .flip-card .star-rating .partial svg.star {
     color: gold;
     fill: gold;
-    /* The clip-path is applied in JS for full and partial stars */
+    stroke: #000;
+    stroke-width: 1;
 }
