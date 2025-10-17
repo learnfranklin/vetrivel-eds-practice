@@ -11,29 +11,41 @@ function createStarRating(ratingText, maxRating = 5) {
     ratingContainer.className = 'star-rating';
     ratingContainer.setAttribute('aria-label', `${score} out of ${maxRating} stars`);
     
-    const starSVG = `
+    const starSVGPath = 'M12 17.27l6.18 3.73-1.64-7.03 5.46-4.73-7.19-.61L12 2.6l-2.77 6.13-7.19.61 5.46 4.73-1.64 7.03z';
+
+    const getStarSVG = (path) => `
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="star">
-            <path d="M12 17.27l6.18 3.73-1.64-7.03 5.46-4.73-7.19-.61L12 2.6l-2.77 6.13-7.19.61 5.46 4.73-1.64 7.03z"/>
+            <path d="${path}"/>
         </svg>
     `;
-    
+
     for (let i = 1; i <= maxRating; i++) {
-        const star = document.createElement('span');
-        star.innerHTML = starSVG;
+        const starWrapper = document.createElement('span');
+        starWrapper.classList.add('star-wrapper');
+
+        starWrapper.innerHTML = getStarSVG(starSVGPath); 
         
         let percentage = 0;
-        if (i <= Math.floor(score)) {
+        const isFull = i <= Math.floor(score);
+        const isPartial = i === Math.ceil(score) && score % 1 !== 0;
+
+        if (isFull) {
             percentage = 100;
-        } else if (i === Math.ceil(score) && score % 1 !== 0) {
+        } else if (isPartial) {
             percentage = (score - Math.floor(score)) * 100;
         }
 
         if (percentage > 0) {
-            star.children[0].style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
+            const overlayStar = document.createElement('div');
+            overlayStar.className = 'star-overlay';
+            overlayStar.innerHTML = getStarSVG(starSVGPath);
+            
+            overlayStar.children[0].style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
+            starWrapper.appendChild(overlayStar);
         }
         
-        star.classList.add(i <= score ? 'filled' : percentage > 0 ? 'partial' : 'empty');
-        ratingContainer.appendChild(star);
+        starWrapper.classList.add(isFull ? 'filled' : isPartial ? 'partial' : 'empty');
+        ratingContainer.appendChild(starWrapper);
     }
     
     return ratingContainer;
