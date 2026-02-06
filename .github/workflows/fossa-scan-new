@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: 'The branch to scan'
+        description: 'The branch to scan new'
         required: false
-        default: 'GDCPAEM-3652'
+        default: 'main'
   push:
     branches:
-      - GDCPAEM-7903_github_actions_fossa
+      - test_fossa_branch
 
 jobs:
   fossa-scan:
