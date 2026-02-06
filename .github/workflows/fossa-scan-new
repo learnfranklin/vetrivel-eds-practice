@@ -1,0 +1,32 @@
+name: Fossa Scan
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'The branch to scan'
+        required: false
+        default: 'GDCPAEM-3652'
+  push:
+    branches:
+      - GDCPAEM-7903_github_actions_fossa
+
+jobs:
+  fossa-scan:
+    runs-on: [self-hosted, general-ubuntu-2404-n2-standard-2-prod]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Run Fossa Scan
+        uses: fossa/fossa-action@v1
+        with:
+          project: fmcdealer-aem-50385-app-fmcdealer-us-cloud
+          branch: ${{ github.event.inputs.branch || github.ref_name }}
+          api_key: ${{ secrets.FOSSA_TOKEN }}
